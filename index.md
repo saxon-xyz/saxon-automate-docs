@@ -23,7 +23,7 @@ Saxon Automate follows the same automation patterns used internally by [Splice](
 
 ## What It Does
 
-Saxon Automate runs alongside a Canton participant node and automates contract lifecycle operations that would otherwise require manual intervention or custom code. Saxon Automate auto-discovers installed apps from a built-in catalog of known Daml templates. Operators can override or extend with YAML config.
+Saxon Automate runs alongside a Canton participant node and automates contract lifecycle operations that would otherwise require manual intervention or custom code. Saxon Automate auto-discovers installed apps from a built-in catalog of known Daml templates. Operators can override or extend with YAML config, or plug in custom logic via [imported actions](imported-actions).
 
 **Example automations:**
 - Cancel expired trade proposals when their deadline passes
@@ -32,6 +32,7 @@ Saxon Automate runs alongside a Canton participant node and automates contract l
 - Process recurring subscription payments
 - Bill fees on commercial agreements at regular intervals
 - Clean up audit records (settled DVPs, failed transfers)
+- Submit on-chain payments via the [Splice CIP-56 transfer-factory pattern](imported-actions#settlement-via-the-cip-56-token-standard) — custom Daml settlement choices that exercise the registry-mediated transfer flow
 
 Every transaction Saxon Automate submits earns Canton Coin rewards under the Featured App program — 80% to the validator, 20% to Saxon Nodes.
 
@@ -80,8 +81,11 @@ See the full [Installation Guide](install) for details.
 
 - [Installation Guide](install) — Step-by-step setup for Docker and Kubernetes
 - [Configuration Reference](config) — Trigger types, field paths, and argument expressions
+- [Imported Actions](imported-actions) — Plug in custom JS/TS functions for workloads that don't fit a single choice exercise (multi-step orchestration, ledger-derived choice args, CIP-56 settlement)
 - [Example Configs](examples) — Ready-made configs for Canton Swap, DA Utility DARs, and Cantara
-- [Canton Coin Rewards](rewards) — How Saxon Automate earns rewards and the 80/20 split
+- [Canton Coin Rewards](rewards) — How Saxon Automate earns rewards under the traffic-based CIP-0104 model
+- [Operator Tips](operator-tips) — Canton/Splice platform quirks worth knowing
+- [Roadmap](roadmap) — Shipped, active, planned
 
 ## Support
 

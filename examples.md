@@ -244,3 +244,34 @@ jobs:
       choice: AcceptedTransfer_Execute
       args: {}
 ```
+
+## Custom Imported Action (CIP-56 settlement)
+
+For automations that need to compute settlement amounts from ledger state or external pricing before submitting, see [Imported Actions](imported-actions). Catalog stanza shape:
+
+```yaml
+defaults:
+  pollIntervalMs: 10000
+  deduplicationSeconds: 300
+
+jobs:
+  bill-subscriptions:
+    trigger: deadline
+    watch:
+      module: Acme.Billing.V1
+      entity: Subscription
+    when:
+      field: nextDueDate
+      condition: past
+    action:
+      type: imported
+      package: '@acme/billing-runner'
+      function: runBilling
+      args:
+        subscriptionId: "$contract.subscriptionId"
+        # Forward the live contract id so the daemon doesn't submit
+        # against an archived predecessor after the first settle.
+        contractId: "$contract.contractId"
+```
+
+The runner package builds the choice args, posts to the scan registry at `/registry/transfer-instruction/v1/transfer-factory` to get the disclosed contracts + opaque choice context, then submits a Daml choice that exercises the transfer factory via `TokenTransferContext`. The daemon supplies the shared OAuth2 token provider and ledger client — see [Imported Actions](imported-actions) for the `deps` interface.
