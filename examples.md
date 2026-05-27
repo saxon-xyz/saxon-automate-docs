@@ -7,54 +7,6 @@ title: Example Configs
 
 Download a config to get started, or combine jobs from multiple examples.
 
-## Canton Swap
-
-Automates OTC trade settlement and expired proposal cleanup for the Canton Swap application.
-
-```yaml
-defaults:
-  pollIntervalMs: 10000
-  deduplicationSeconds: 300
-
-jobs:
-  cancel-expired-proposals:
-    trigger: deadline
-    watch:
-      module: Obsidian.CantonSwap.V1
-      entity: TradeProposal
-    when:
-      field: validUntil
-      condition: past
-    exercise:
-      choice: TradeProposal_Cancel
-      args:
-        cancelor: "$party"
-
-  settle-otc-trades:
-    trigger: match
-    watch:
-      module: Obsidian.CantonSwap
-      entity: OTCTrade
-    match:
-      module: Splice.AmuletAllocation
-      entity: AmuletAllocation
-      ref: allocation.settlement.settlementRef.cid??
-      leg: allocation.transferLegId
-      legs: transferLegs
-    deadline: settleBefore
-    exercise:
-      choice: OTCTrade_Settle
-      args:
-        allocationsWithContext:
-          $eachLeg:
-            _1: "$match.contractId"
-            _2:
-              context:
-                values: {}
-              meta:
-                values: {}
-```
-
 ## Digital Asset Utility DARs
 
 Automates operations for Digital Asset's reference utility packages: DVP settlement, registry mint/transfer execution, collateral transfers, commercial fee billing, and audit record cleanup.

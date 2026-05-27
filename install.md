@@ -35,9 +35,6 @@ Saxon Automate automatically scans your participant's installed DARs and generat
 Download an example config for specific apps:
 
 ```bash
-# For Canton Swap automation
-curl -o saxon-automate.yaml {{ site.examples_url }}/canton-swap.yaml
-
 # For DA Utility DAR automation
 curl -o saxon-automate.yaml {{ site.examples_url }}/utility-dars.yaml
 ```
@@ -50,8 +47,8 @@ Auto-discovery runs by default. Any manual jobs you add to `saxon-automate.yaml`
 
 ```yaml
 exclude:
-  - settle-otc-trades
   - bill-base-fees
+  - cleanup-settled-dvps
 ```
 
 To disable auto-discovery entirely: `autoDiscover: false`
