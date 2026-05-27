@@ -245,6 +245,31 @@ jobs:
       args: {}
 ```
 
+## Traffic Top-Up (CIP-0104)
+
+Auto-purchases synchronizer traffic when the operator's balance falls below a threshold. The catalog ships this app paused-by-default — this config unpauses it and tunes for a hot validator. Live submits also require `TRAFFIC_TOPUP_ALLOW_LIVE=true` in the daemon's env; without it, the action runs in **shadow mode** (logs decisions only). See [Traffic Top-Up](traffic-topup) for the full architecture + tuning guide.
+
+```yaml
+jobs:
+  topup-validator-traffic:
+    trigger: interval
+    paused: false
+    watch:
+      module: Splice.AmuletRules
+      entity: AmuletRules
+    every: 60000   # poll every 1 min — tighter than the catalog default for hot validators
+    action:
+      type: imported
+      package: "@saxon-xyz/saxon-automate-daemon"
+      function: runTrafficTopup
+      args:
+        threshold: 50000000      # fire when remaining < 50 MB
+        topupAmount: 200000000   # buy 200 MB per fire
+        maxInFlight: 10000000    # skip if a pending buy of > 10 MB is already in flight
+        minIntervalMs: 60000     # at least 1 min between fires per (validator, member, migration)
+        expiresInSec: 600        # BuyTrafficRequest auto-expires if uncompleted in 10 min
+```
+
 ## Custom Imported Action (CIP-56 settlement)
 
 For automations that need to compute settlement amounts from ledger state or external pricing before submitting, see [Imported Actions](imported-actions). Catalog stanza shape:

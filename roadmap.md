@@ -16,6 +16,7 @@ What's shipped, what's actively being built, what's planned.
 - **OAuth2 with refresh-ahead-of-expiry.** Token provider mints once, refreshes proactively before expiry, deduplicates concurrent callers, invalidates and retries on 401. 24h JWTs are minted once per daemon lifetime.
 - **Canton 3.5+ JSON Ledger API support.** `filtersByParty.<party>.cumulative[].templateFilter` request shape; suffix-match on hex-vs-`#`-prefixed templateId in responses; activeAtOffset anchored to ledger-end for consistent ACS snapshots.
 - **Adaptive backoff on participant element-count caps.** Catches HTTP 413 `JSON_API_MAXIMUM_LIST_ELEMENTS_NUMBER_REACHED` mid-scan, halves the window from the same cursor, retries; sticks at the post-shrink size for the rest of the scan so dense ledger regions don't repeatedly re-hit the cap.
+- **Traffic auto-top-up (CIP-0104).** New imported action `runTrafficTopup` monitors the operator's traffic balance via scan and submits `WalletAppInstall_CreateBuyTrafficRequest` when the balance falls below a configured threshold. The validator-app's internal wallet automation completes the buy on-ledger. Paused-by-default in the catalog; `TRAFFIC_TOPUP_ALLOW_LIVE=true` in env to leave shadow mode. See [Traffic Top-Up](traffic-topup).
 
 ## Active
 
@@ -23,7 +24,6 @@ What's shipped, what's actively being built, what's planned.
 
 ## Planned
 
-- **Traffic top-up imported action.** Under CIP-0104, validators need to keep their synchronizer traffic balance topped up to commit transactions. Hot validators burn traffic fast and manual top-up is operationally painful. Saxon Automate will ship an imported action that polls the validator's traffic balance, compares against a configured threshold, and submits a top-up purchase on-chain when the balance drops. Generic to all validators — pay CC, get traffic, no manual intervention.
 - **Prometheus alerting rule pack.** The daemon already exposes Prometheus metrics (`billing_runs_total`, `outstanding_amount_cc`, `record_skip_total`); the alerting rules to consume them are next.
 
 ## Open questions

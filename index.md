@@ -32,6 +32,7 @@ Saxon Automate runs alongside a Canton participant node and automates contract l
 - Process recurring subscription payments
 - Bill fees on commercial agreements at regular intervals
 - Clean up audit records (settled DVPs, failed transfers)
+- Auto-purchase synchronizer traffic when the balance runs low — see [Traffic Top-Up](traffic-topup) for the CIP-0104 auto-top-up flow
 - Submit on-chain payments via the [Splice CIP-56 transfer-factory pattern](imported-actions#settlement-via-the-cip-56-token-standard) — custom Daml settlement choices that exercise the registry-mediated transfer flow
 
 Every transaction Saxon Automate submits earns Canton Coin rewards under the Featured App program — 80% to the validator, 20% to Saxon Nodes.
@@ -82,7 +83,8 @@ See the full [Installation Guide](install) for details.
 - [Installation Guide](install) — Step-by-step setup for Docker and Kubernetes
 - [Configuration Reference](config) — Trigger types, field paths, and argument expressions
 - [Imported Actions](imported-actions) — Plug in custom JS/TS functions for workloads that don't fit a single choice exercise (multi-step orchestration, ledger-derived choice args, CIP-56 settlement)
-- [Example Configs](examples) — Ready-made configs for Canton Swap, DA Utility DARs, and Cantara
+- [Traffic Top-Up](traffic-topup) — Auto-purchase CIP-0104 synchronizer traffic when the operator's balance runs low
+- [Example Configs](examples) — Ready-made configs for Canton Swap, DA Utility DARs, Cantara, and traffic top-up
 - [Canton Coin Rewards](rewards) — How Saxon Automate earns rewards under the traffic-based CIP-0104 model
 - [Operator Tips](operator-tips) — Canton/Splice platform quirks worth knowing
 - [Roadmap](roadmap) — Shipped, active, planned

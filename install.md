@@ -252,6 +252,12 @@ kubectl -n canton create configmap saxon-automate-config \
 kubectl -n canton apply -f saxon-automate-k8s.yaml
 ```
 
+## Optional: Enable Traffic Auto-Top-Up
+
+Saxon Automate can auto-purchase CIP-0104 synchronizer traffic when your validator's balance runs low — useful on hot validators where manual top-up is operationally painful. The feature is paused-by-default and requires explicit env opt-in to leave shadow mode.
+
+See [Traffic Top-Up](traffic-topup) for the architecture, decision logic, env vars, and recommended workflow (shadow-mode first, then flip live).
+
 ## Troubleshooting
 
 **No jobs fire:** Set `-e LOG_LEVEL=DEBUG` to see poll ticks and contract counts.
