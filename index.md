@@ -16,10 +16,10 @@ Saxon Automate solves this: one daemon that auto-discovers installed apps and ha
 Saxon Automate follows the same automation patterns used internally by [Splice](https://github.com/hyperledger-labs/splice) — polling jitter to prevent thundering herd across validators, silent retries for transient failures, and graceful reconnection on stream interruptions.
 
 **Financial benefits:**
-- **Earn Canton Coin rewards** — every transaction Saxon Automate submits is tagged as a Featured App activity, earning rewards from the Canton Network reward pool
+- **Earn Canton Coin rewards** — for a registered Featured App, the transactions Saxon Automate submits earn Canton Coin rewards from the network reward pool. Saxon Automate keeps that rewarded volume flowing automatically.
 - **Maximize transaction volume** — automated choices fire immediately when conditions are met, generating more rewarded transactions than manual operation
 - **Reduce operational cost** — no manual monitoring or intervention needed for routine contract lifecycle operations
-- **Featured App reward pool** — significantly favours active applications until mid-2029, making early adoption especially valuable
+- **Featured App program** — the reward pool is front-loaded toward active applications in the network's early years. Featured App status isn't automatic, though: it requires a `FeaturedAppRight` and, under CIP-0116, locking a Canton Coin stake (App-provider tier) to activate and maintain reward eligibility. Saxon helps you set this up.
 
 ## What It Does
 
@@ -35,7 +35,14 @@ Saxon Automate runs alongside a Canton participant node and automates contract l
 - Auto-purchase synchronizer traffic when the balance runs low — see [Traffic Top-Up](traffic-topup) for the CIP-0104 auto-top-up flow
 - Submit on-chain payments via the [Splice CIP-56 transfer-factory pattern](imported-actions#settlement-via-the-cip-56-token-standard) — custom Daml settlement choices that exercise the registry-mediated transfer flow
 
-Every transaction Saxon Automate submits earns Canton Coin rewards under the Featured App program — 80% to the validator, 20% to Saxon Nodes.
+For a registered Featured App, the transactions Saxon Automate submits earn Canton Coin rewards under the Featured App program.
+
+## Beyond the daemon
+
+Saxon Automate is part of a small family of Saxon-operated validator services. Alongside the automation daemon described here:
+
+- **[External-Party Onboarding](external-party-onboarding)** — stand up self-custody (external) parties for your end users at signup, via a simple API. The user's key stays in your own custody.
+- **[Query API (PQS)](query-api)** — query your validator's ledger state (active contracts, balances, history) in SQL or over HTTP, incrementally indexed.
 
 ## Example Output
 
@@ -83,6 +90,8 @@ See the full [Installation Guide](install) for details.
 - [Installation Guide](install) — Step-by-step setup for Docker and Kubernetes
 - [Configuration Reference](config) — Trigger types, field paths, and argument expressions
 - [Imported Actions](imported-actions) — Plug in custom JS/TS functions for workloads that don't fit a single choice exercise (multi-step orchestration, ledger-derived choice args, CIP-56 settlement)
+- [External-Party Onboarding](external-party-onboarding) — Onboard self-custody (external) end-user parties at signup via a simple API
+- [Query API (PQS)](query-api) — Query your validator's ledger state in SQL/HTTP, incrementally indexed
 - [Traffic Top-Up](traffic-topup) — Auto-purchase CIP-0104 synchronizer traffic when the operator's balance runs low
 - [Example Configs](examples) — Ready-made configs for DA Utility DARs, Cantara, BitSafe CBTC, and traffic top-up
 - [Canton Coin Rewards](rewards) — How Saxon Automate earns rewards under the traffic-based CIP-0104 model
