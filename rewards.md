@@ -5,43 +5,28 @@ title: Rewards
 
 # Rewards
 
-Every transaction Saxon Automate submits earns Canton Coin for your validator from the network's reward pool.
+Saxon Automate increases the volume of **rewarded operations** your validator performs. It fires contract-lifecycle choices the moment conditions are met, so work that would otherwise sit undone — and unrewarded — gets done, 24/7.
 
-## Why Your Validator Earns More With Saxon Automate
+## How rewards work on Canton
 
-- **Never miss a reward** — without automation, contracts expire unexercised and those rewards go to nobody. Saxon Automate fires choices the moment conditions are met, 24/7
-- **More transactions, more CC** — every automated cancel, settle, execute, and bill is a rewarded transaction your validator wouldn't have submitted manually
-- **Zero cost** — Saxon Automate uses your existing credentials and runs alongside your participant. No additional infrastructure, no fees to Saxon
-- **Early adopter advantage** — the Featured App reward pool significantly favours active applications until mid-2029. The earlier you run Saxon Automate, the larger your share
+Two reward streams matter here:
 
-## How It Works
+- **Validator rewards** — earned by the validator operator for participating in the network. You earn these as a validator; the more activity that happens on your node, the more of this work is captured.
+- **App rewards** — earned by **Featured Apps** for the transactions they drive. This is the stream automation amplifies: every automated settle, execute, cancel, and bill is a transaction your node wouldn't have submitted manually.
 
-The Canton Network's traffic-based rewards model (CIP-0104) is live. Rewards are calculated automatically from each transaction's synchronizer traffic — no activity markers needed, no off-chain accounting required. Each featured app party on a transaction receives an equal share of the app rewards that transaction generates.
+## App rewards aren't automatic
 
-This is the post-2026 model that replaced liveness coupons. Validators who automate more transactions earn more, full stop.
+To earn app rewards, a party must be a registered **Featured App**, which takes two things:
 
-> **Heads up:** traffic-based rewards mean validators also need to keep their synchronizer traffic balance topped up to commit transactions. See the [Roadmap](roadmap) for the planned traffic top-up automation.
+1. **A `FeaturedAppRight`** — the on-ledger grant that makes your app's transactions reward-eligible. **Today, app rewards flow through this mechanism**: the featured app marks its activity and earns from the app reward pool.
+2. **A Canton Coin stake (CIP-0116)** — to activate and maintain Featured-App (App-provider) status, you lock a stake in Canton Coin. Without the lock, the status doesn't take effect.
 
-## Who Benefits
+> **The model is changing.** CIP-0104 (traffic-based app rewards) is **approved but not yet live**. When it lands, app rewards will be computed from each transaction's synchronizer traffic rather than from explicit activity markers. Until then, the `FeaturedAppRight` mechanism above is what applies. Saxon tracks these changes and keeps the automation aligned.
 
-**Validators** — earn Canton Coin on every automated transaction. More apps installed means more jobs auto-discovered, more transactions, more rewards.
+## Why it matters now
 
-**App Developers** — Saxon Automate generates transactions on your contracts, increasing your app's network activity. Each featured app party on the transaction earns an equal share of the rewards.
+The Featured App reward pool is **front-loaded toward active applications** in the network's early years — while the pool is large and competition is low, the rewarded activity your node drives translates into a larger share. Saxon Automate's role is to make sure you're capturing that activity automatically, not leaving it on the table.
 
-**Saxon Nodes** — as a featured app party, Saxon earns an equal share of app rewards on Saxon Automate transactions. This funds ongoing development, new catalog entries, and ecosystem tooling.
+## Keep your traffic topped up
 
-## Reward Distribution
-
-Under traffic-based rewards, app rewards are split equally among all featured app parties on each transaction:
-
-| Featured parties on transaction | Share per party |
-|--------------------------------|-----------------|
-| 1 (Saxon Automate only) | 100% |
-| 2 (Saxon Automate + one app) | 50% each |
-| 3 (Saxon Automate + two apps) | 33% each |
-
-Validator rewards (separate from app rewards) are earned by the validator operator regardless of the number of featured app parties.
-
-## Why It Matters Now
-
-The Canton Network's Featured App reward pool significantly favours active applications until mid-2029. Early adoption means a larger share of a growing pool while competition is low.
+Committing transactions consumes synchronizer traffic, so a node that earns through activity also has to keep its traffic balance funded. See [Traffic Top-Up](traffic-topup) for the automated top-up flow.
